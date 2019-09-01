@@ -8,7 +8,6 @@
 		<groupId>com.baeldung</groupId>
 		<artifactId>user-management-parent-m9</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
-		<relativePath>../REST-With-Spring</relativePath>
 	</parent>
 
 	<dependencies>
