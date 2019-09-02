@@ -145,6 +145,26 @@
             <id>live</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>start-server</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop-server</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -162,10 +182,36 @@
                                     <includes>
                                         <include>**/*LiveTest.java</include>
                                     </includes>
+                                    <systemPropertyVariables>
+                                        <webTarger>cargo</webTarger>
+                                    </systemPropertyVariables>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <configuration>
+                            <wait>false</wait>
+                            <container>
+                                <containerId>tomcat8</containerId>
+                                <type>embedded</type>
+                                <systemProperties>
+                                    <envTarger>dev</envTarger>
+                                    <persistenveTarget>cargo</persistenveTarget>
+                                </systemProperties>
+                            </container>
+                            <configuration>
+                                <properties>
+                                    <cargo.servlet.port>8082</cargo.servlet.port>
+                                    <cargo.tomcat.ajp.port>8010</cargo.tomcat.ajp.port>
+                                    <cargo.rmi.port>8006</cargo.rmi.port>
+                                </properties>
+                            </configuration>
+                        </configuration>
+                    </plugin>
+
 
                 </plugins>
             </build>
